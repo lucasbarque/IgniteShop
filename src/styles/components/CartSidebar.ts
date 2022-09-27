@@ -42,7 +42,7 @@ export const CartContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: 24,
-  overflowY: 'scroll',
+  overflowY: 'auto',
   height: '53vh',
 
   '&::-webkit-scrollbar': {
