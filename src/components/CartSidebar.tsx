@@ -25,6 +25,7 @@ export function CartSidebar() {
   async function handleBuyProducts() {
     try {
       const result = await redirectToCheckout();
+      console.log(result);
       if (result?.error) {
         console.error(result);
         // setStatus('redirect-error')
@@ -59,42 +60,49 @@ export function CartSidebar() {
           />
         </svg>
       </CloseButton>
+      {cartCount > 0 ? (
+        <>
+          <h2>Sacola de compras</h2>
+          <MainContainer>
+            <CartContainer>
+              {Object.entries(cartDetails).map((cart) => {
+                return (
+                  <CartItem key={cart[0]}>
+                    <Image src={cart[1].image} alt='' width='100' height='93' />
 
-      <h2>Sacola de compras</h2>
-      <MainContainer>
-        <CartContainer>
-          {Object.entries(cartDetails).map((cart) => {
-            return (
-              <CartItem key={cart[0]}>
-                <Image src={cart[1].image} alt='' width='100' height='93' />
-
+                    <div>
+                      <h3>{cart[1].name}</h3>
+                      <span>{cart[1].formattedValue}</span>
+                      <button onClick={() => removeItem(cart[0])}>
+                        Remover
+                      </button>
+                    </div>
+                  </CartItem>
+                );
+              })}
+            </CartContainer>
+            <Footer>
+              <Resume>
                 <div>
-                  <h3>{cart[1].name}</h3>
-                  <span>{cart[1].formattedValue}</span>
-                  <button onClick={() => removeItem(cart[0])}>Remover</button>
+                  <h3>Quantidade</h3>
+                  <span>
+                    {cartCount > 1 ? `${cartCount} itens` : `${cartCount} item`}
+                  </span>
                 </div>
-              </CartItem>
-            );
-          })}
-        </CartContainer>
-        <Footer>
-          <Resume>
-            <div>
-              <h3>Quantidade</h3>
-              <span>
-                {cartCount > 1 ? `${cartCount} itens` : `${cartCount} item`}
-              </span>
-            </div>
-            <div>
-              <h3>
-                <strong>Valor total</strong>
-              </h3>
-              <strong>{formattedTotalPrice}</strong>
-            </div>
-          </Resume>
-          <button onClick={handleBuyProducts}>Finalizar compra</button>
-        </Footer>
-      </MainContainer>
+                <div>
+                  <h3>
+                    <strong>Valor total</strong>
+                  </h3>
+                  <strong>{formattedTotalPrice}</strong>
+                </div>
+              </Resume>
+              <button onClick={handleBuyProducts}>Finalizar compra</button>
+            </Footer>
+          </MainContainer>
+        </>
+      ) : (
+        <h2>Nenhum item inserido no carrinho.</h2>
+      )}
     </CartSidebarContainer>
   );
 }

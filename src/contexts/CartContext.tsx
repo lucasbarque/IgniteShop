@@ -10,7 +10,8 @@ interface CartProviderProps {
 }
 
 export function CartProvider({ children }: CartProviderProps) {
-  const stripeKey = process.env.STRIPE_PUBLIC_KEY;
+  const stripeKey = process.env.NEXT_STRIPE_PUBLIC_KEY;
+  console.log({ stripeKey });
 
   return (
     <ShoppingCartProvider
